@@ -1,48 +1,48 @@
 # Aman's Claude Code Setup
 
-Everything I use day-to-day with Claude Code — plugins, skills, and settings.
-
-## Install
-
-Paste this into Claude Code:
+Everything I use with Claude Code. Paste this into a session to get started:
 
 > Read https://github.com/amanaiproduct/amans-claude-plugins
-> and help me install each plugin interactively — show me
-> what each one does and let me pick which ones I want.
+> and walk me through installing each plugin and skill one
+> by one. Describe what each one does and let me pick.
 
-## Plugins & Skills
+## Plugins
 
-### Custom (included in this repo)
+| Plugin | Source | What it does |
+|--------|--------|-------------|
+| [plugin-dashboard](plugins/plugin-dashboard) | this repo | Shows which tools and plugins were used on every turn |
+| [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | every-marketplace | 29 agents, 22 commands, 19 skills for code review, research, and workflow automation |
+| [frontend-design](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | UI/UX implementation skill for production-grade interfaces |
+| [ralph-loop](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Run Claude in a loop until task completion |
+| [explanatory-output-style](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Educational insights about implementation choices |
+| [plugin-dev](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Tools for building Claude Code plugins |
 
-- **plugin-dashboard** — ASCII tool/plugin usage dashboard on every turn (badge & box modes)
-- **amans-tools** — Personal skills and commands:
-  - `/ccusage` — Check Claude Code usage stats
-  - `excalidraw-skill` — Draw and refine Excalidraw diagrams via MCP
+## Skills
 
-### Marketplace
+| Skill | What it does |
+|-------|-------------|
+| [ccusage](skills/ccusage) | Check Claude Code token usage stats |
+| [excalidraw](skills/excalidraw) | Draw and refine Excalidraw diagrams via MCP |
 
-- **[compound-engineering](https://github.com/EveryInc/compound-engineering-plugin)** — 29 agents, 22 commands, 19 skills for code review, research, design, and workflow automation
-- **[frontend-design](https://github.com/anthropics/claude-plugins-official)** — UI/UX implementation skill
-- **[ralph-loop](https://github.com/anthropics/claude-plugins-official)** — Run Claude in a loop until task completion
-- **[explanatory-output-style](https://github.com/anthropics/claude-plugins-official)** — Educational insights about implementation choices
-- **[plugin-dev](https://github.com/anthropics/claude-plugins-official)** — Tools for building Claude Code plugins
-
-## Manual Install
+## Install
 
 ```bash
 # Marketplaces
 claude plugin add github:anthropics/claude-plugins-official
 claude plugin add git:https://github.com/EveryInc/compound-engineering-plugin.git
 
-# Marketplace plugins
+# Plugins
 claude plugin enable compound-engineering@every-marketplace
 claude plugin enable frontend-design@claude-plugins-official
 claude plugin enable ralph-loop@claude-plugins-official
 claude plugin enable explanatory-output-style@claude-plugins-official
 claude plugin enable plugin-dev@claude-plugins-official
 
-# Custom plugins (clone this repo first)
+# This repo (clone first)
+git clone https://github.com/amanaiproduct/amans-claude-plugins ~/Projects/amans-claude-plugins
 claude plugin add dir:~/Projects/amans-claude-plugins
 claude plugin enable plugin-dashboard@amans-plugins
-claude plugin enable amans-tools@amans-plugins
+
+# Skills
+cp -r ~/Projects/amans-claude-plugins/skills/* ~/.claude/skills/
 ```

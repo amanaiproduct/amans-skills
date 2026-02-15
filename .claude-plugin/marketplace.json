@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "amans-plugins",
-  "description": "Aman's personal Claude Code plugin marketplace",
+  "description": "Aman's Claude Code plugins and skills",
   "owner": {
     "name": "Aman Khan",
     "email": "aman@amankhan.com"
@@ -9,24 +9,13 @@
   "plugins": [
     {
       "name": "plugin-dashboard",
-      "description": "ASCII dashboard showing which tools/plugins were used on every turn of Claude Code, with badge and box display modes",
+      "description": "ASCII dashboard showing which tools/plugins were used on every turn of Claude Code",
       "version": "1.0.0",
       "author": {
         "name": "Aman Khan",
         "email": "aman@amankhan.com"
       },
       "source": "./plugins/plugin-dashboard",
-      "category": "productivity"
-    },
-    {
-      "name": "amans-tools",
-      "description": "Aman's personal skills and commands — ccusage, excalidraw, and more",
-      "version": "1.0.0",
-      "author": {
-        "name": "Aman Khan",
-        "email": "aman@amankhan.com"
-      },
-      "source": "./plugins/amans-tools",
       "category": "productivity"
     }
   ]
