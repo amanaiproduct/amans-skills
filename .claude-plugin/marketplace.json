@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "amans-plugins",
+  "description": "Aman's personal Claude Code plugin marketplace",
+  "owner": {
+    "name": "Aman Khan",
+    "email": "aman@amankhan.com"
+  },
+  "plugins": [
+    {
+      "name": "plugin-dashboard",
+      "description": "ASCII dashboard showing which tools/plugins were used on every turn of Claude Code, with badge and box display modes",
+      "version": "1.0.0",
+      "author": {
+        "name": "Aman Khan",
+        "email": "aman@amankhan.com"
+      },
+      "source": "./plugins/plugin-dashboard",
+      "category": "productivity"
+    }
+  ]
+}
