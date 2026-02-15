@@ -17,6 +17,17 @@
       },
       "source": "./plugins/plugin-dashboard",
       "category": "productivity"
+    },
+    {
+      "name": "amans-tools",
+      "description": "Aman's personal skills and commands — ccusage, excalidraw, and more",
+      "version": "1.0.0",
+      "author": {
+        "name": "Aman Khan",
+        "email": "aman@amankhan.com"
+      },
+      "source": "./plugins/amans-tools",
+      "category": "productivity"
     }
   ]
 }

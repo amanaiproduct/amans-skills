@@ -7,6 +7,7 @@ Personal plugin marketplace for Claude Code.
 | Plugin | Description |
 |--------|-------------|
 | [plugin-dashboard](plugins/plugin-dashboard) | ASCII dashboard showing tool/plugin usage per turn (badge & box modes) |
+| [amans-tools](plugins/amans-tools) | Personal skills (excalidraw) and commands (ccusage) |
 
 ## Installation
 
