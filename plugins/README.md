@@ -5,6 +5,7 @@ Plugins that ship with this repo. Each subdirectory is a standalone Claude Code 
 | Plugin | What it does |
 |--------|-------------|
 | [plugin-dashboard](plugin-dashboard) | Per-turn tool usage visualizer — badge, box, or full system map |
+| [explanatory-output-style](explanatory-output-style) | Educational insights on every turn via SessionStart hook |
 
 ## Adding a new plugin
 
