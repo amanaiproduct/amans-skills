@@ -17,17 +17,6 @@
       },
       "source": "./plugins/plugin-dashboard",
       "category": "productivity"
-    },
-    {
-      "name": "explanatory-output-style",
-      "description": "Educational insights about implementation choices via SessionStart hook",
-      "version": "1.0.0",
-      "author": {
-        "name": "Aman Khan",
-        "email": "aman@amankhan.com"
-      },
-      "source": "./plugins/explanatory-output-style",
-      "category": "productivity"
     }
   ]
 }

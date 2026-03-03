@@ -19,10 +19,10 @@ Paste this into a Claude Code session:
 | Plugin | Source | What it does |
 |--------|--------|-------------|
 | [plugin-dashboard](plugins/plugin-dashboard) | this repo | Shows which tools and plugins were used on every turn |
-| [explanatory-output-style](plugins/explanatory-output-style) | this repo | Educational insights about implementation choices on every turn |
 | [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | every-marketplace | 29 agents, 22 commands, 19 skills for code review, research, and workflow automation |
 | [frontend-design](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | UI/UX implementation skill for production-grade interfaces |
 | [ralph-loop](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Run Claude in a loop until task completion |
+| [explanatory-output-style](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Educational insights about implementation choices |
 | [plugin-dev](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | Tools for building Claude Code plugins |
 
 ### Skills
@@ -45,13 +45,13 @@ claude plugin add git:https://github.com/EveryInc/compound-engineering-plugin.gi
 claude plugin enable compound-engineering@every-marketplace
 claude plugin enable frontend-design@claude-plugins-official
 claude plugin enable ralph-loop@claude-plugins-official
+claude plugin enable explanatory-output-style@claude-plugins-official
 claude plugin enable plugin-dev@claude-plugins-official
 
 # This repo (clone first)
 git clone https://github.com/amanaiproduct/amans-skills ~/Projects/amans-skills
 claude plugin add dir:~/Projects/amans-skills
 claude plugin enable plugin-dashboard@amans-plugins
-claude plugin enable explanatory-output-style@amans-plugins
 
 # Skills
 cp -r ~/Projects/amans-skills/skills/* ~/.claude/skills/
