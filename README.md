@@ -31,6 +31,7 @@ Paste this into a Claude Code session:
 |-------|-------------|
 | [ccusage](skills/ccusage) | Check Claude Code token usage stats |
 | [excalidraw](skills/excalidraw) | Draw and refine Excalidraw diagrams via MCP |
+| [skill-creator](skills/skill-creator) | Create, test, and iterate on skills with evals, benchmarks, and description optimization ([upstream](https://github.com/anthropics/skills)) |
 
 ## Manual Install
 
