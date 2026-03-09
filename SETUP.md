@@ -42,6 +42,7 @@ To install a skill, copy its folder into `~/.claude/skills/`:
 |-------|---------|-------------|
 | ccusage | `cp -r ~/Projects/amans-skills/skills/ccusage ~/.claude/skills/` | Check Claude Code token usage stats by running `bunx ccusage` |
 | excalidraw | `cp -r ~/Projects/amans-skills/skills/excalidraw ~/.claude/skills/` | Draw and refine Excalidraw diagrams programmatically via MCP server |
+| design-for-agents | `cp -r ~/Projects/amans-skills/skills/design-for-agents ~/.claude/skills/` | Design skills, CLIs, docs, and onboarding flows optimized for AI coding agents |
 
 ## Step 5: Verify
 

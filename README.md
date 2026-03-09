@@ -31,6 +31,7 @@ Paste this into a Claude Code session:
 |-------|-------------|
 | [ccusage](skills/ccusage) | Check Claude Code token usage stats |
 | [excalidraw](skills/excalidraw) | Draw and refine Excalidraw diagrams via MCP |
+| [design-for-agents](skills/design-for-agents) | Design skills, CLIs, and docs optimized for AI coding agents |
 
 ## Manual Install
 
