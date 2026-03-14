@@ -51,7 +51,20 @@ When `gws auth setup` fails (permissions, existing project, or you want control)
 
 ### Headless / Remote Machine Setup
 
-`gws auth login` opens a browser and listens on localhost for the OAuth redirect. On headless machines (SSH, remote Mac Mini, CI), the redirect can't reach the CLI. Workaround:
+`gws auth login` opens a browser and listens on localhost for the OAuth redirect. On headless machines, the browser can't open locally. Two approaches:
+
+#### Option A: Agent browser (recommended for OpenClaw)
+
+If your agent has browser access (e.g., OpenClaw's `user` profile with Chrome DevTools MCP):
+
+1. Run `gws auth login` in the background. It prints an OAuth URL and starts a localhost listener.
+2. Use the agent's browser tool to open the OAuth URL in the user's Chrome session.
+3. The agent clicks through the account chooser and consent screens.
+4. The localhost redirect completes automatically since the browser and CLI are on the same machine.
+
+This works because the browser tool controls the real Chrome session on the same host, so `localhost` redirects resolve correctly.
+
+#### Option B: Manual token exchange (no browser access)
 
 1. Run `gws auth login` on the headless machine. It prints an OAuth URL and starts listening.
 2. Open that URL in a browser on **any machine** (your laptop, phone, etc.)
@@ -99,6 +112,15 @@ gws auth status    # Shows authenticated account and active scopes
 gws auth export    # Prints decrypted credentials (debugging only)
 ```
 
+### Credential Storage
+
+`gws auth login` saves credentials encrypted by default (AES-256-GCM, key in OS Keyring or local `.encryption_key`):
+
+- Encrypted: `~/Library/Application Support/gws/credentials.enc`
+- Plaintext fallback: `~/Library/Application Support/gws/credentials.json`
+
+The CLI handles decryption and token refresh automatically. Prefer encrypted storage for agent machines.
+
 ## Multi-Account Setup
 
 To use multiple Google accounts (e.g., a read-only service account + your personal account):
@@ -136,15 +158,57 @@ Draft body here...
 
 Save to an agreed-upon directory (e.g., Obsidian vault). The user reviews and sends manually.
 
-## Reading Another User's Data
+## Reading Another User's Data (Agent Account Pattern)
 
-For **personal Gmail accounts**, you cannot read another user's inbox via your own OAuth token. Options:
+The recommended pattern for AI assistants: **authenticate as a dedicated agent account** (e.g., `agent@gmail.com`) and have the user share access to their data. The user's credentials never touch the agent's machine.
 
-1. **Email forwarding** (recommended): Set up forwarding from their account to yours. Cleanest approach, no API workarounds, no security concerns.
-2. **Calendar/Drive sharing**: The other user shares specific calendars (read-only) or Drive folders (Viewer) with your account. Shared items appear in `gws calendar calendarList list` and `gws drive files list`.
-3. **Direct OAuth as that user**: Run the auth flow with their account. Requires their consent. Most complete access but requires their participation.
-4. **Gmail delegation**: Available for personal accounts but grants send access too (security concern). Delegates take up to 24 hours to activate, invitation expires in 7 days.
-5. **Domain-wide delegation**: Google Workspace organizations only. Not available for personal accounts.
+### Gmail: Delegation (recommended)
+
+Gmail delegation gives the agent account full read access to the user's entire inbox:
+
+1. User goes to Gmail > Settings > Accounts > "Grant access to your account"
+2. User adds the agent's email address
+3. Agent account receives an invitation email with an acceptance link
+4. After accepting, it takes up to 30 minutes to propagate
+5. Agent reads the user's inbox via: `userId: "user@gmail.com"` in API calls
+
+```bash
+# Read the user's inbox (not the agent's)
+gws gmail +triage --params '{"userId": "user@gmail.com"}'
+gws gmail users messages list --params '{"userId": "user@gmail.com", "maxResults": 10}'
+```
+
+**Security note:** Delegation technically grants send access, but if the agent authenticates with `gmail.readonly` scope, the API will reject any write attempt. This gives two layers of protection: scope restriction + your ability to revoke delegation at any time.
+
+**Why not forwarding?** Forwarding only captures new incoming mail. With delegation, the agent can read the full inbox, sent mail, and thread history, which is critical for triage (checking if the user already replied to a thread).
+
+### Calendar: Sharing
+
+User shares specific calendars with the agent account:
+- Google Calendar > Settings > "Share with specific people" > add agent email
+- Choose "See all event details" (read) or "Make changes to events" (write)
+
+```bash
+gws calendar events list --params '{"calendarId": "user@gmail.com", "timeMin": "...", "singleEvents": true, "orderBy": "startTime"}'
+```
+
+### Drive: Sharing
+
+User shares specific folders with the agent account:
+- Right-click folder > Share > add agent email as Viewer or Editor
+
+```bash
+gws drive files list --params '{"q": "'\''user@gmail.com'\'' in owners"}'
+```
+
+### Other options
+
+| Method | Pros | Cons |
+|--------|------|------|
+| **Delegation** (Gmail) | Full inbox read, real-time, thread history | Up to 30 min propagation, technically grants send (mitigated by readonly scope) |
+| **Forwarding** (Gmail) | Simple setup | New mail only, no sent/thread history, breaks triage |
+| **Direct OAuth as user** | Full access | User's credentials on agent machine (security risk) |
+| **Domain-wide delegation** | No user interaction needed | Google Workspace orgs only, not personal accounts |
 
 ## Scopes Reference
 
@@ -186,9 +250,12 @@ For full usage details, run `gws generate-skills` and read the per-service skill
 | Problem | Fix |
 |---------|-----|
 | "Access blocked: app not verified" | Add the Google account as a test user in GCP > Auth Platform > Audience |
+| "Google hasn't verified this app" | Expected for personal GCP projects. Click Continue (safe for your own app) |
 | `gws auth setup` permission denied | The gcloud-authenticated account needs Owner/Editor role on the GCP project |
 | Credentials not saving after `gws auth login` | Keyring issue on headless machines. Use the manual token exchange above |
 | 403 on API calls | Check that the required API is enabled in GCP console |
+| 403 "Delegation denied" | Delegation takes up to 30 min to propagate after acceptance |
 | Wrong account's data returned | Verify which credential file is active with `gws auth status` |
 | "Invalid scope" | Use short names with `gws auth login --scopes` (e.g., `gmail.readonly`). For raw API, use full URLs |
-| Redirect fails during auth | Headless machine. Copy the code from the URL bar and exchange manually |
+| Redirect fails during auth | Headless machine. Use agent browser (Option A) or manual token exchange (Option B) |
+| Both credential files show same account | Check with `gws auth status`. Re-run auth flow selecting the correct account |
