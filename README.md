@@ -31,7 +31,8 @@ Paste this into a Claude Code session:
 |-------|-------------|
 | [ccusage](skills/ccusage) | Check Claude Code token usage stats |
 | [excalidraw](skills/excalidraw) | Draw and refine Excalidraw diagrams via MCP |
-| [google-workspace](skills/google-workspace) | Setup guide for the [gws CLI](https://github.com/googleworkspace/cli) — OAuth, headless auth, multi-account, read-only mode |
+| [google-workspace](skills/google-workspace) | Setup guide for the [gws CLI](https://github.com/googleworkspace/cli) — OAuth, agent account delegation, headless auth |
+| [design-for-agents](skills/design-for-agents) | Design skills, CLIs, and docs optimized for AI coding agents |
 
 ## Manual Install
 

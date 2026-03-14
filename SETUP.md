@@ -42,8 +42,23 @@ To install a skill, copy its folder into `~/.claude/skills/`:
 |-------|---------|-------------|
 | ccusage | `cp -r ~/Projects/amans-skills/skills/ccusage ~/.claude/skills/` | Check Claude Code token usage stats by running `bunx ccusage` |
 | excalidraw | `cp -r ~/Projects/amans-skills/skills/excalidraw ~/.claude/skills/` | Draw and refine Excalidraw diagrams programmatically via MCP server |
+| design-for-agents | `cp -r ~/Projects/amans-skills/skills/design-for-agents ~/.claude/skills/` | Design skills, CLIs, docs, and onboarding flows optimized for AI coding agents |
+| google-workspace | `cp -r ~/Projects/amans-skills/skills/google-workspace ~/.claude/skills/` | Setup guide for the gws CLI — OAuth, agent account delegation, headless auth |
 
-## Step 5: Verify
+## Step 5: Google Workspace Access (Optional)
+
+If I want Claude to read my Gmail, Calendar, or Drive, walk me through setting up the [gws CLI](https://github.com/googleworkspace/cli). This uses a dedicated agent account so my personal credentials stay off the machine.
+
+The google-workspace skill has the full guide, but the quick version:
+
+1. `npm install -g @googleworkspace/cli`
+2. `gws auth setup` (or manual GCP project setup)
+3. `gws auth login --scopes gmail.readonly,calendar,drive,tasks`
+4. Set up Gmail delegation, calendar sharing, and drive sharing from your personal account to the agent account
+
+Ask if I want to set this up. If yes, follow the google-workspace skill instructions.
+
+## Step 6: Verify
 
 After installation, run `claude plugin list` to confirm everything is enabled. Then try one of the skills (like `/ccusage`) to make sure it works.
 
