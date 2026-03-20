@@ -1,0 +1,8 @@
+{
+  "name": "compound-writing",
+  "description": "Multi-phase writing loop with voice analysis, parallel critique agents, and compounding learnings. Produces content in Aman's voice across all formats.",
+  "author": {
+    "name": "Aman Khan",
+    "email": "aman@amankhan.com"
+  }
+}
