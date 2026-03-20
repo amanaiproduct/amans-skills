@@ -18,6 +18,7 @@ Paste this into a Claude Code session:
 
 | Plugin | Source | What it does |
 |--------|--------|-------------|
+| [compound-writing](plugins/compound-writing) | this repo | Multi-phase writing loop with voice analysis, 4 parallel critique agents, and anti-slop detection |
 | [plugin-dashboard](plugins/plugin-dashboard) | this repo | Shows which tools and plugins were used on every turn |
 | [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | every-marketplace | 29 agents, 22 commands, 19 skills for code review, research, and workflow automation |
 | [frontend-design](https://github.com/anthropics/claude-plugins-official) | claude-plugins-official | UI/UX implementation skill for production-grade interfaces |
