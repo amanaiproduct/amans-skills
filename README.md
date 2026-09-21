@@ -31,6 +31,7 @@ Paste this into a Claude Code session:
 | Skill | What it does |
 |-------|-------------|
 | [ccusage](skills/ccusage) | Check Claude Code token usage stats |
+| [clarity-editor](skills/clarity-editor) | Prioritized critique and targeted clarity edits that preserve the author's message, voice, and flow |
 | [excalidraw](skills/excalidraw) | Draw and refine Excalidraw diagrams via MCP |
 | [google-workspace](skills/google-workspace) | Setup guide for the [gws CLI](https://github.com/googleworkspace/cli) — OAuth, agent account delegation, headless auth |
 | [design-for-agents](skills/design-for-agents) | Design skills, CLIs, and docs optimized for AI coding agents |
