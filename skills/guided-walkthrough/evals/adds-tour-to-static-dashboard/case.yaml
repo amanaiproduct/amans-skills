@@ -1,0 +1,11 @@
+schema_version: "1.1"
+name: adds-tour-to-static-dashboard
+expected_outcome: |
+  dashboard.html gains a guided tour that a first-time visitor can start from a visible
+  button. Each step spotlights a real part of the page (summary figures, filters, the
+  chart and table tabs, the detail panel) through a data-tour attribute, with a short
+  title and one to three sentences of body text. A step that needs the Table tab opens
+  it and says so. The tour has Back, Next and a way to skip, and its colours come from
+  the page's own tokens with no purple, indigo or violet.
+context:
+  scaffold_script: place-files.sh

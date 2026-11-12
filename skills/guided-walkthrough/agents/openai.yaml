@@ -1,0 +1,4 @@
+interface:
+  display_name: "Guided Walkthrough"
+  short_description: "Add a step-by-step spotlight tour to any UI"
+  default_prompt: "Use $guided-walkthrough to add a guided tour to this interface."

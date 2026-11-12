@@ -1,0 +1,79 @@
+/* Walkthrough popover. Load after driver.js's own driver.css.
+   Every colour comes from a --tour-* token. Map the tokens once to the product's design
+   system so the popover matches it in every theme, for example:
+
+     :root {
+       --tour-bg: var(--surface);          --tour-fg: var(--text);
+       --tour-muted: var(--text-muted);    --tour-border: var(--border);
+       --tour-accent: var(--accent);       --tour-on-accent: var(--on-accent);
+       --tour-radius: var(--radius);       --tour-button-radius: var(--radius-sm);
+     }
+
+   Unmapped, the defaults are the browser's own page and text colours, so the popover is
+   light on a light page and dark on a page that declares `color-scheme: dark`. They are
+   neutral on purpose. Do not default to purple, indigo or violet: that family reads as an
+   untouched AI default. Use the product's real accent, or leave the neutral. */
+:root {
+  --tour-bg: Canvas;
+  --tour-fg: CanvasText;
+  --tour-muted: color-mix(in srgb, CanvasText 62%, Canvas);
+  --tour-border: color-mix(in srgb, CanvasText 16%, Canvas);
+  --tour-accent: CanvasText;
+  --tour-on-accent: Canvas;
+  --tour-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+  --tour-radius: 10px;
+  --tour-button-radius: 7px;
+}
+
+.driver-popover.tour-pop {
+  background: var(--tour-bg);
+  color: var(--tour-fg);
+  border: 1px solid var(--tour-border);
+  border-radius: var(--tour-radius);
+  box-shadow: var(--tour-shadow);
+  max-width: 340px;
+  font: inherit;
+}
+/* driver.js builds the popover from <header> and <footer> elements, so a page that styles
+   those bare tags would restyle the popover. Reset what such rules usually set. */
+.driver-popover.tour-pop .driver-popover-title,
+.driver-popover.tour-pop .driver-popover-footer {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  position: static;
+}
+.driver-popover.tour-pop .driver-popover-title { display: block; }
+.driver-popover.tour-pop .driver-popover-footer { display: flex; align-items: center; justify-content: space-between; }
+.driver-popover.tour-pop .driver-popover-title { color: var(--tour-fg); font-size: 14px; font-weight: 600; margin: 0; }
+.driver-popover.tour-pop .driver-popover-description { color: var(--tour-muted); font-size: 13px; line-height: 1.5; }
+.driver-popover.tour-pop .driver-popover-description b,
+.driver-popover.tour-pop .driver-popover-description code { color: var(--tour-fg); }
+.driver-popover.tour-pop .driver-popover-arrow { border-color: var(--tour-bg); }
+.driver-popover.tour-pop .driver-popover-close-btn { color: var(--tour-muted); }
+.driver-popover.tour-pop .driver-popover-footer { gap: 6px; margin-top: 12px; }
+.driver-popover.tour-pop .driver-popover-footer button {
+  background: transparent;
+  color: var(--tour-fg);
+  border: 1px solid var(--tour-border);
+  border-radius: var(--tour-button-radius);
+  text-shadow: none;
+  font: inherit;
+  font-size: 12px;
+  padding: 5px 11px;
+  cursor: pointer;
+}
+.driver-popover.tour-pop .driver-popover-footer button:hover { border-color: var(--tour-muted); }
+.driver-popover.tour-pop .driver-popover-footer button:focus-visible { outline: 2px solid var(--tour-fg); outline-offset: 2px; }
+.driver-popover.tour-pop .driver-popover-footer .driver-popover-next-btn {
+  background: var(--tour-accent);
+  border-color: var(--tour-accent);
+  color: var(--tour-on-accent);
+}
+.driver-popover.tour-pop .driver-popover-footer .driver-popover-next-btn:hover { opacity: 0.88; }
+/* "Skip tour" sits at the far left; Back and Next stay together on the right. */
+.driver-popover.tour-pop .driver-popover-footer .tour-skip { margin-right: auto; border-color: transparent; color: var(--tour-muted); padding-left: 0; }
+.driver-popover.tour-pop .driver-popover-footer .tour-skip:hover { color: var(--tour-fg); border-color: transparent; }
+.driver-popover.tour-pop .tour-small { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--tour-border); font-size: 11px; }
+.driver-popover.tour-pop .tour-count { margin-top: 8px; font-size: 11px; font-variant-numeric: tabular-nums; opacity: 0.75; }

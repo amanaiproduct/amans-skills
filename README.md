@@ -36,6 +36,7 @@ Paste this into a Claude Code session:
 | [google-workspace](skills/google-workspace) | Setup guide for the [gws CLI](https://github.com/googleworkspace/cli) — OAuth, agent account delegation, headless auth |
 | [design-for-agents](skills/design-for-agents) | Design skills, CLIs, and docs optimized for AI coding agents |
 | [deploy-private-cloudflare-site](skills/deploy-private-cloudflare-site) | Deploy and verify private Cloudflare Workers sites with exact-user authentication |
+| [guided-walkthrough](skills/guided-walkthrough) | Add a step-by-step spotlight tour to any web UI, with a tested runner and a neutral theme |
 
 ## Manual Install
 

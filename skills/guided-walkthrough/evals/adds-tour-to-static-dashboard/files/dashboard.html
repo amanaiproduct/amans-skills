@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support desk weekly</title>
+<style>
+  :root { --surface: #ffffff; --page: #f4f5f7; --text: #1b1e24; --text-muted: #5d6470; --border: #dcdfe5; --accent: #0b6e4f; --on-accent: #ffffff; }
+  body { margin: 0; font: 14px/1.5 system-ui, sans-serif; background: var(--page); color: var(--text); }
+  header { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  h1 { font-size: 16px; margin: 0; }
+  main { max-width: 980px; margin: 0 auto; padding: 24px; display: grid; gap: 20px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card, .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .card b { display: block; font-size: 24px; }
+  .card span { color: var(--text-muted); }
+  .filters { display: flex; gap: 10px; align-items: center; }
+  select, button { font: inherit; padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text); }
+  .tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+  .tabs button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  .bars { display: flex; align-items: flex-end; gap: 10px; height: 140px; }
+  .bars div { flex: 1; background: var(--accent); border-radius: 4px 4px 0 0; }
+  #detail p { color: var(--text-muted); margin: 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Support desk weekly</h1>
+  <button id="export">Export CSV</button>
+</header>
+<main>
+  <section class="cards">
+    <div class="card"><b>412</b><span>Tickets opened</span></div>
+    <div class="card"><b>3h 10m</b><span>Median first reply</span></div>
+    <div class="card"><b>91%</b><span>Solved within two days</span></div>
+  </section>
+  <section class="panel filters">
+    <label>Team <select id="team"><option>All teams</option><option>Billing</option><option>Onboarding</option></select></label>
+    <label>Week <select id="week"><option>3 Nov</option><option>27 Oct</option></select></label>
+  </section>
+  <section class="panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-chart" aria-selected="true">Chart</button>
+      <button role="tab" id="tab-table" aria-selected="false">Table</button>
+    </div>
+    <div id="view-chart" class="bars"><div style="height:60%"></div><div style="height:85%"></div><div style="height:40%"></div><div style="height:70%"></div><div style="height:55%"></div></div>
+    <table id="view-table" hidden>
+      <thead><tr><th>Day</th><th>Opened</th><th>Solved</th></tr></thead>
+      <tbody>
+        <tr data-day="Mon"><td>Mon</td><td>78</td><td>70</td></tr>
+        <tr data-day="Tue"><td>Tue</td><td>104</td><td>96</td></tr>
+        <tr data-day="Wed"><td>Wed</td><td>55</td><td>61</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="panel" id="detail"><p>Select a day in the table to see its tickets.</p></section>
+</main>
+<script>
+  const tabs = { chart: document.getElementById('tab-chart'), table: document.getElementById('tab-table') };
+  const views = { chart: document.getElementById('view-chart'), table: document.getElementById('view-table') };
+  for (const name of Object.keys(tabs)) tabs[name].addEventListener('click', () => {
+    for (const other of Object.keys(tabs)) { tabs[other].setAttribute('aria-selected', String(other === name)); views[other].hidden = other !== name; }
+  });
+  document.querySelectorAll('tr[data-day]').forEach((row) => row.addEventListener('click', () => {
+    document.getElementById('detail').innerHTML = '<p><b>' + row.dataset.day + '</b>: ' + row.children[1].textContent + ' opened, ' + row.children[2].textContent + ' solved.</p>';
+  }));
+</script>
+</body>
+</html>
