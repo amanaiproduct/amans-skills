@@ -51,6 +51,7 @@
     const text = { next: 'Next', back: 'Back', done: 'Done', skip: 'Skip tour', ...labels }
     let index = 0
     let finished = false
+    let watch = null
     let d
 
     // Every way out goes through here: Skip, Done, the corner ✕, Escape, a click on the dimmed
@@ -60,6 +61,7 @@
       if (finished) return
       finished = true
       running = null
+      clearInterval(watch)
       d.destroy()
       onFinish?.()
     }
@@ -85,6 +87,8 @@
 
     const show = async () => {
       if (finished) return
+      clearInterval(watch)
+      const shown = index
       const step = steps[index]
       if (step.path && navigate && here() !== step.path) {
         navigate(step.path)
@@ -130,6 +134,14 @@
           onCloseClick: end,
         },
       })
+      // Apps re-render. If the framework replaces the highlighted element (data arrives, a
+      // panel remounts), the spotlight is left on a node that is no longer on the page.
+      // Notice that and highlight the replacement.
+      watch = setInterval(() => {
+        if (finished || index !== shown) return clearInterval(watch)
+        const now = document.querySelector(step.sel)
+        if (now && now !== el) show()
+      }, 400)
     }
 
     running = { stop: end }

@@ -113,7 +113,7 @@ await checkTour({ steps, navigate })   // logs a table of steps whose target nev
 await GuidedTour.checkTour({ steps: tourSteps })
 ```
 
-Then go through the tour once by hand, forwards and backwards, at a narrow window width as well as a wide one. Look for a popover covering its own target, a step that fires before its tab has opened, and the page not scrolling the target into view. Say which of these you checked when you report the work.
+Then go through the tour once by hand, forwards and backwards, at a narrow window width as well as a wide one. If you test it in a headless browser, use real time. A virtual-time budget lets the tour's timers run ahead of network requests, so targets on a freshly loaded route look missing when they are not. Look for a popover covering its own target, a step that fires before its tab has opened, and the page not scrolling the target into view. Say which of these you checked when you report the work.
 
 ## What the runner does
 
@@ -123,6 +123,7 @@ Knowing this stops you from working against it.
 - Before each step it changes route if the step's `path` differs from the current one, runs the step's `action`, then waits up to three seconds for the target to exist. Content that loads late is fine.
 - A target that never appears is skipped with a console warning. The tour never hangs on a missing element.
 - It scrolls the target to the middle of the view, then highlights it.
+- If the app re-renders and replaces the highlighted element, for example when data arrives after a route change, it highlights the replacement. Without this the spotlight stays on a node that is no longer on the page.
 - Back and Next re-render on the next tick. Calling driver.js's highlight from inside its own button handler makes Back stop working.
 - It adds a "Skip tour" button to every step and wires the corner close button, which driver.js leaves dead once custom button handlers are set.
 - Every exit runs `onFinish` exactly once. driver.js's own end-of-tour hook does not fire reliably for a tour driven step by step, so the runner does not depend on it.
